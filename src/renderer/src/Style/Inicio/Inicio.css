@@ -1,0 +1,89 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.body {
+  font-family: Arial, sans-serif;
+  
+  background-image: url(https://i.postimg.cc/KzbMX38M/Especies-forrajeras.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+body::-webkit-scrollbar {
+  width: 10px;
+}
+
+.logo {
+  width: 20vw;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.4));
+}
+
+.centrar_inicio {
+  display: flex;
+  flex-direction: column; 
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.form_inicio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 450px;
+  padding: 30px 12px;
+  border-radius: 10px;
+  background-color: #fff;
+  gap: 18px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.2);
+}
+
+.input_label_inicio {
+  align-self: flex-start;
+  font-weight: bold;
+}
+
+.alinear_input_inicio {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  align-items: center;
+}
+
+.input_inicio {
+  padding: 16px;
+  width: 100%;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.registrarse {
+  text-decoration: none;
+  color: #000;
+  font-size: 14px;
+}
+
+.inicio {
+  text-decoration: none;
+  color: #fff;
+  font-size: 14px;
+}
+
+.btn_inicio {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: #fff;
+  cursor: pointer;
+}
+
+.btn_inicio:hover {
+  background-color: #0069d9;
+}

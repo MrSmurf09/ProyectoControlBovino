@@ -1,0 +1,27 @@
+.vaca-info-2 {
+  display: flex;
+  align-items: center;
+  gap: 4%;
+}
+
+.vaca-imagen {
+  width: 15%;
+  height: auto;
+  border-radius: 50%;
+}
+
+.info-detalles {
+  display: flex;
+  flex-grow: 1;
+}
+
+.alinear-info {
+  display: flex;
+  width: 35%;
+  flex-direction: column;
+  gap: 2%;
+}
+
+.info-detalles p {
+  margin: 1% 0;
+}

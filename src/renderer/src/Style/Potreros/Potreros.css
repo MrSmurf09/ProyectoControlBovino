@@ -1,0 +1,60 @@
+.potreros-container {
+  padding: 20px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.potreros-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.volver-fincas {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.titulo-potreros {
+  font-size: 24px;
+  color: #007bff;
+}
+
+.potreros-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.potrero-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.potrero-info {
+  display: flex;
+  gap: 60px;
+	cursor: pointer;
+  text-decoration: none;
+}
+
+.potrero-nombre {
+  font-weight: bold;
+  color: #000;
+}
+
+.potrero-detalles {
+  color: #666;
+}
+
+.potrero-delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ff0000;
+}

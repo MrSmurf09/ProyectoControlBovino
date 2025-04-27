@@ -1,0 +1,110 @@
+import React, { useState, useEffect } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
+import '../../Style/Inicio/Inicio.css'
+import { useSnackbar } from '../../Context/SnackbarContext'
+import { useAppData } from '../../Context/AppContext'
+import { isTokenValid } from '../../utils/auth'
+
+
+function Inicio() {
+  const [Correo, setCorreo] = useState('')
+  const [Contraseña, setContraseña] = useState('')
+  const navigate = useNavigate()
+  const { showSnackbar } = useSnackbar()
+  const {
+    setUserId,
+    setNombreUser,
+    setToken,
+    token,
+    userId
+  } = useAppData()
+  
+
+  const setinfousuario = (data) => {
+    setUserId(data.userId)
+    localStorage.setItem('userId', data.userId)
+    setNombreUser(data.Nombre)
+    localStorage.setItem('nombreUser', data.Nombre)
+    setToken(data.token)
+    localStorage.setItem('token', data.token)
+  }
+
+  useEffect(() => {
+    if (token && userId && isTokenValid(token)) {
+      navigate(`/Home/${userId}`)
+    }
+  }, [token, userId, navigate])
+  
+
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const response = await fetch('https://api-proyecto-jkec.onrender.com/usuario/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ Correo, Contraseña })
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        // Guarda el ID del usuario y el token
+        setinfousuario(data)
+
+        // Redirigir a la página de inicio después de iniciar sesión
+        showSnackbar('Sesión iniciada exitosamente', 'success')
+        navigate(`/Home/${data.userId}`)
+      } else {
+        console.log(data.message) // Mostrar error si las credenciales no son válidas
+        showSnackbar(`Error: ${data.message}`, 'error')
+      }
+    } catch (err) {
+      console.log(err.message)
+      showSnackbar(err.message, 'error')
+    }
+  }
+
+  return (
+    <div className="body">
+      <div className="centrar_inicio">
+        <img src="https://i.postimg.cc/zD0RMBZy/logo-removebg.png" alt="Logo" className="logo" />
+        <form className="form_inicio" onSubmit={handleSubmit}>
+          <div className="alinear_input_inicio">
+            <label className="input_label_inicio">Usuario:</label>
+            <input
+              type="email"
+              className="input_inicio"
+              placeholder="Ingrese su Usuario"
+              value={Correo}
+              onChange={(e) => setCorreo(e.target.value)}
+              required
+            />
+          </div>
+          <div className="alinear_input_inicio">
+            <label className="input_label_inicio">Contraseña:</label>
+            <input
+              type="password"
+              className="input_inicio"
+              placeholder="Ingrese su Contraseña"
+              value={Contraseña}
+              onChange={(e) => setContraseña(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className="btn_inicio">
+            Iniciar Sesión
+          </button>
+          <span>
+            <Link to="/Registrarse" className="registrarse">
+              ¿Registrate?
+            </Link>
+          </span>
+        </form>
+      </div>
+    </div>
+  )
+}
+
+export default Inicio

@@ -1,0 +1,40 @@
+.sidebar {
+  width: 20%;
+  min-width: 20%;
+  background-color: #f4f4f4;
+  padding: 2%;
+  border: 1px solid #000; 
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 88vh;
+  max-height: 88vh;
+  gap: 3%;
+}
+
+.icons-sidebar {
+  display: flex;
+  align-items: center;
+  gap: 5%;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.icons-sidebar:hover:not(.active) {
+  color: black;
+  padding: 2%;
+}
+
+.icons-sidebar.active {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.inicio {
+  text-decoration: none;
+  color: #000;
+}

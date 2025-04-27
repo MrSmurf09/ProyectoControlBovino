@@ -1,0 +1,96 @@
+.vacas-container {
+  padding: 20px;
+  gap: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.vacas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.volver-potreros {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.titulo-vacas {
+  font-size: 24px;
+  color: #007bff;
+}
+
+.vacas-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.vaca-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.vaca-info {
+  display: flex;
+  gap: 60px;
+	cursor: pointer;
+  text-decoration: none;
+}
+
+.vaca-nombre {
+  font-weight: bold;
+  color: #000;
+}
+
+.vaca-detalles {
+  color: #666;
+}
+
+.botones-acciones {
+  display: flex;
+	gap: 12px;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.btn-desparasitacion {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000;
+}
+
+.btn-desparasitacion:hover {
+  color: #007bff;
+  transform: scale(1.1);
+}
+
+.btn-embarazo {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000;
+}
+
+.btn-embarazo:hover {
+  color: #007bff;
+  transform: scale(1.1);
+}
+
+.vaca-delete-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #000;
+}
+
+.vaca-delete-btn:hover {
+  color: #dc3545;
+  transform: scale(1.1);
+}
