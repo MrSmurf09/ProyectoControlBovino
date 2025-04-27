@@ -16,7 +16,7 @@ const ProcesosMedicos = ({ id }) => {
   // Obtener los procesos de medicos desde la API
   const obtenerProcesos = async () => {
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/api/procesos/medicos/${id}`)
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/procesos/medicos/${id}`)
       const data = await response.json()
       console.log('Data de los procesos:', data)
       if (response.ok) {
@@ -43,7 +43,7 @@ const ProcesosMedicos = ({ id }) => {
     e.preventDefault()
 
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/api/registrar/procesos/medicos/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/registrar/procesos/medicos/${id}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

@@ -13,7 +13,7 @@ const RegistroProduccion = ({ id }) => {
   // Obtener los registros de producción de leche desde la API
   const obtenerRegistros = async () => {
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/api/produccion/leche/${id}`)
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/produccion/leche/${id}`)
       const data = await response.json()
       console.log("Data de los registros:", data)
       if (response.ok) {
@@ -47,7 +47,7 @@ const RegistroProduccion = ({ id }) => {
     e.preventDefault()
 
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/api/registrar/leche/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/registrar/leche/${id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

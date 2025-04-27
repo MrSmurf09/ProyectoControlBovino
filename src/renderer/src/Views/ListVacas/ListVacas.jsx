@@ -31,7 +31,7 @@ function ListVacas() {
   // Obtener vacas del potrero desde la API
   const obtenerVacas = async () => {
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/api/vacas/${potreroId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/vacas/${potreroId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         },
@@ -76,7 +76,7 @@ function ListVacas() {
     // }
 
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/vacas/nueva/${potreroId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/vacas/nueva/${potreroId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

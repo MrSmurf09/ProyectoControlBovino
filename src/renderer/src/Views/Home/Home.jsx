@@ -36,7 +36,7 @@ function Home() {
     console.log('UsuarioId:', userId) // Verifica si el UsuarioId está definido
 
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/api/fincas?UsuarioId=${userId}`,
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/fincas?UsuarioId=${userId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`
@@ -80,7 +80,7 @@ function Home() {
     data.append('UsuarioId', userId)
 
     try {
-      const response = await fetch('https://api-proyecto-jkec.onrender.com/api/fincas', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/fincas`, {
         method: 'POST',
         body: data
       })
@@ -123,7 +123,7 @@ function Home() {
     }
 
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/api/fincas/${fincaSeleccionada.id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/fincas/${fincaSeleccionada.id}`, {
         method: 'PUT',
         body: data
       })
@@ -149,7 +149,7 @@ function Home() {
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/api/fincas/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/fincas/${id}`, {
         method: 'DELETE'
       })
 

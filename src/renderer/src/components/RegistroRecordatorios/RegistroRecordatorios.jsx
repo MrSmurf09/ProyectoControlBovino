@@ -21,7 +21,7 @@ const RegistroRecordatorios = ({ id }) => {
   // Obtener los recordatorios desde la API
   const obtenerRecordatorios = async () => {
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/api/obtener/recordatorios/${id}`)
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/obtener/recordatorios/${id}`)
       const data = await response.json()
       console.log("Data de los recordatorios:", data)
       if (response.ok) {
@@ -43,7 +43,7 @@ const RegistroRecordatorios = ({ id }) => {
     e.preventDefault()
 
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/api/registrar/recordatorios/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/registrar/recordatorios/${id}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

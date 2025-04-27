@@ -27,29 +27,29 @@ function Registrarse() {
             showSnackbar('Por favor, rellene todos los campos', 'warning');
             return;
         }
-      
+
         try {
-          const response = await fetch('https://api-proyecto-jkec.onrender.com/usuario/registrar', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/usuario/registrar`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(formData),
-          });
-      
-          const data = await response.json();
-      
-          if (!response.ok) {
-            // Muestra el mensaje de error que viene del backend (si existe)
-            showSnackbar(data.message || 'Error al registrar el usuario', 'error');
-            throw new Error(data.message || 'Error al registrar el usuario');
-          }
-      
-          showSnackbar(data.message || 'Usuario registrado con éxito', 'success');
-          navigate('/Inicio');
+        });
+        
+            const data = await response.json();
+
+            if (!response.ok) {
+                // Muestra el mensaje de error que viene del backend (si existe)
+                showSnackbar(data.message || 'Error al registrar el usuario', 'error');
+                throw new Error(data.message || 'Error al registrar el usuario');
+            }
+        
+            showSnackbar(data.message || 'Usuario registrado con éxito', 'success');
+            navigate('/Inicio');
         } catch (error) {
-          console.error('Error:', error);
-          showSnackbar(error.message || 'Error desconocido', 'error');
+            console.error('Error:', error);
+            showSnackbar(error.message || 'Error desconocido', 'error');
         }
-      };
+    };
 
     return (
         <div className="body">

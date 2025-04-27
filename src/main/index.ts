@@ -16,7 +16,9 @@ function createWindow(): void {
     icon: iconPath,
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
-      sandbox: false
+      sandbox: false,
+      nodeIntegration: true,
+      contextIsolation: false,
     }
   })
 

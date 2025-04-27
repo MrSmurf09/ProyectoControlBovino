@@ -26,7 +26,7 @@ const HistorialProduccion = ({ id }) => {
 
   const obtenerHistorial = async () => {
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/api/historial/produccion/${id}`)
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/historial/produccion/${id}`)
       const data = await response.json()
       console.log('Data de los registros:', data)
       if (response.ok) {
@@ -43,7 +43,7 @@ const HistorialProduccion = ({ id }) => {
   // Función para obtener la información de la vaca
   const obtenerInfoVaca = async () => {
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/api/vacas/perfil/${id}`)
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/vacas/perfil/${id}`)
       const data = await response.json()
       if (response.ok) {
         setVacaInfo(data.vaca[0])

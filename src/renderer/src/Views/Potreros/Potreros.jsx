@@ -27,9 +27,9 @@ function Potreros() {
   }
 
   // Función para obtener los potreros de la finca
-  const obtenerPotreros = async (fincaId) => {
+  const obtenerPotreros = async () => {
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/api/potreros/${fincaId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/potreros/${fincaId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         },
@@ -47,7 +47,7 @@ function Potreros() {
   }
 
   useEffect(() => {
-    obtenerPotreros(fincaId)
+    obtenerPotreros()
   }, [fincaId])
 
   // Ingresar datos del potrero
@@ -61,7 +61,7 @@ function Potreros() {
     e.preventDefault()
     
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/api/potreros/${fincaId}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/potreros/${fincaId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)

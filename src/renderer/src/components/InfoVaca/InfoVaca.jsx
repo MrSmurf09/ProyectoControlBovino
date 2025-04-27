@@ -9,7 +9,7 @@ const InfoVaca = ({ id }) => {
   // ✅ Obtener la información de la vaca desde la API
   const obtenerVaca = async () => {
     try {
-      const response = await fetch(`https://api-proyecto-jkec.onrender.com/api/vacas/perfil/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/vacas/perfil/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`
         },

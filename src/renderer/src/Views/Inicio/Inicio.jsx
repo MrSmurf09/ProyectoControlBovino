@@ -41,7 +41,7 @@ function Inicio() {
     e.preventDefault()
 
     try {
-      const response = await fetch('https://api-proyecto-jkec.onrender.com/usuario/login', {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/usuario/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ Correo, Contraseña })
