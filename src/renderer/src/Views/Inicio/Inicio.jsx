@@ -15,6 +15,10 @@ function Inicio() {
     setUserId,
     setNombreUser,
     setToken,
+    setFincaId, 
+    setFincaNombre, 
+    setPotreroId, 
+    setPotreroNombre,
     token,
     userId
   } = useAppData()
@@ -32,6 +36,25 @@ function Inicio() {
   useEffect(() => {
     if (token && userId && isTokenValid(token)) {
       navigate(`/Home/${userId}`)
+    } else {
+      setUserId(null)
+      setNombreUser(null)
+      setToken(null)
+      setFincaId(null)
+      setFincaNombre(null)
+      setPotreroId(null)
+      setPotreroNombre(null)
+      
+      // Limpiar localStorage
+      localStorage.removeItem('userId')
+      localStorage.removeItem('fincaId')
+      localStorage.removeItem('potreroId')
+      
+      // También podemos limpiar cualquier otro dato de sesión que exista
+      localStorage.removeItem('token') 
+
+      showSnackbar('La sesion a caducado, por favor, inicia sesión nuevamente', 'info')
+      navigate('/')
     }
   }, [token, userId, navigate])
   
