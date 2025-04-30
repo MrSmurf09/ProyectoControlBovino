@@ -87,3 +87,26 @@ body::-webkit-scrollbar {
 .btn_inicio:hover {
   background-color: #0069d9;
 }
+
+.enlaces-adicionales {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.recuperar-contraseña {
+  background: none;
+  border: none;
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+}
+
+.recuperar-contraseña:hover {
+  color: #0069d9;
+} 

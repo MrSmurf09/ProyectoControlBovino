@@ -1,36 +1,36 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import '../../Style/Inicio/Inicio.css'
-import { useSnackbar } from '../../Context/SnackbarContext'
-import { useAppData } from '../../Context/AppContext'
-import { isTokenValid } from '../../utils/auth'
-
+import { useState, useEffect } from "react"
+import { useNavigate, Link } from "react-router-dom"
+import "../../Style/Inicio/Inicio.css"
+import { useSnackbar } from "../../Context/SnackbarContext"
+import { useAppData } from "../../Context/AppContext"
+import { isTokenValid } from "../../utils/auth"
+import RecuperarContraseñaModal from "../../components/RecuperarContraseña/RecuperarContraseñaModal"
 
 function Inicio() {
-  const [Correo, setCorreo] = useState('')
-  const [Contraseña, setContraseña] = useState('')
+  const [Correo, setCorreo] = useState("")
+  const [Contraseña, setContraseña] = useState("")
+  const [modalOpen, setModalOpen] = useState(false)
   const navigate = useNavigate()
   const { showSnackbar } = useSnackbar()
   const {
     setUserId,
     setNombreUser,
     setToken,
-    setFincaId, 
-    setFincaNombre, 
-    setPotreroId, 
+    setFincaId,
+    setFincaNombre,
+    setPotreroId,
     setPotreroNombre,
     token,
-    userId
+    userId,
   } = useAppData()
-  
 
   const setinfousuario = (data) => {
     setUserId(data.userId)
-    localStorage.setItem('userId', data.userId)
+    localStorage.setItem("userId", data.userId)
     setNombreUser(data.Nombre)
-    localStorage.setItem('nombreUser', data.Nombre)
+    localStorage.setItem("nombreUser", data.Nombre)
     setToken(data.token)
-    localStorage.setItem('token', data.token)
+    localStorage.setItem("token", data.token)
   }
 
   useEffect(() => {
@@ -44,30 +44,35 @@ function Inicio() {
       setFincaNombre(null)
       setPotreroId(null)
       setPotreroNombre(null)
-      
-      // Limpiar localStorage
-      localStorage.removeItem('userId')
-      localStorage.removeItem('fincaId')
-      localStorage.removeItem('potreroId')
-      
-      // También podemos limpiar cualquier otro dato de sesión que exista
-      localStorage.removeItem('token') 
 
-      showSnackbar('La sesion a caducado, por favor, inicia sesión nuevamente', 'info')
-      navigate('/')
+      // Limpiar localStorage
+      localStorage.removeItem("userId")
+      localStorage.removeItem("fincaId")
+      localStorage.removeItem("potreroId")
+
+      // También podemos limpiar cualquier otro dato de sesión que exista
+      localStorage.removeItem("token")
+
+      // Solo mostrar el mensaje si hay un token inválido
+      if (token) {
+        showSnackbar("La sesión ha caducado, por favor, inicia sesión nuevamente", "info")
+      }
+
+      // No redirigir aquí si ya estamos en la página de inicio
+      if (window.location.pathname !== "/") {
+        navigate("/")
+      }
     }
   }, [token, userId, navigate])
-  
-
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/usuario/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ Correo, Contraseña })
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ Correo, Contraseña }),
       })
 
       const data = await response.json()
@@ -77,16 +82,24 @@ function Inicio() {
         setinfousuario(data)
 
         // Redirigir a la página de inicio después de iniciar sesión
-        showSnackbar('Sesión iniciada exitosamente', 'success')
+        showSnackbar("Sesión iniciada exitosamente", "success")
         navigate(`/Home/${data.userId}`)
       } else {
         console.log(data.message) // Mostrar error si las credenciales no son válidas
-        showSnackbar(`Error: ${data.message}`, 'error')
+        showSnackbar(`Error: ${data.message}`, "error")
       }
     } catch (err) {
       console.log(err.message)
-      showSnackbar(err.message, 'error')
+      showSnackbar(err.message, "error")
     }
+  }
+
+  const openRecuperarModal = () => {
+    setModalOpen(true)
+  }
+
+  const closeRecuperarModal = () => {
+    setModalOpen(false)
   }
 
   return (
@@ -119,13 +132,18 @@ function Inicio() {
           <button type="submit" className="btn_inicio">
             Iniciar Sesión
           </button>
-          <span>
+          <div className="enlaces-adicionales">
             <Link to="/Registrarse" className="registrarse">
               ¿Registrate?
             </Link>
-          </span>
+            <button type="button" className="recuperar-contraseña" onClick={openRecuperarModal}>
+              ¿Olvidaste tu contraseña?
+            </button>
+          </div>
         </form>
       </div>
+
+      {modalOpen && <RecuperarContraseñaModal onClose={closeRecuperarModal} showSnackbar={showSnackbar} />}
     </div>
   )
 }
