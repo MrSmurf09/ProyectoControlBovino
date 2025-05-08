@@ -25,7 +25,8 @@ function Header({mostrarBotonCrear = true, mostrarInputBusqueda = true, TextButt
     setFincaId, 
     setFincaNombre, 
     setPotreroId, 
-    setPotreroNombre 
+    setPotreroNombre,
+    userId
   } = useAppData()
   
   const [showUserMenu, setShowUserMenu] = useState(false)
@@ -42,6 +43,7 @@ function Header({mostrarBotonCrear = true, mostrarInputBusqueda = true, TextButt
     setFincaNombre(null)
     setPotreroId(null)
     setPotreroNombre(null)
+    localStorage.removeItem(`recomendacion_vista_${userId}`, "true")
     
     // Limpiar localStorage
     localStorage.removeItem('userId')
