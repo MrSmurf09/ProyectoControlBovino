@@ -9,6 +9,7 @@ import { useSnackbar } from "../../Context/SnackbarContext"
 import { useAppData } from "../../Context/AppContext"
 import Header from "../../components/Header/Header"
 import RecomendacionModal from "../../components/RecomendacionModal/RecomendacionModal"
+import ConfirmacionModal from "../../components/ConfirmacionModal/ConfirmacionModal"
 
 function Home() {
   const [fincas, setFincas] = useState([]) // Lista de fincas obtenidas
@@ -19,6 +20,7 @@ function Home() {
   })
   const [fincaSeleccionada, setFincaSeleccionada] = useState(null)
   const [showRecomendacion, setShowRecomendacion] = useState(false)
+  const [fincaAEliminar, setFincaAEliminar] = useState(null)
 
   const { showSnackbar } = useSnackbar()
   const { userId } = useAppData()
@@ -157,17 +159,29 @@ function Home() {
     }
   }
 
-  // eliminar finca
-  const handleDelete = async (id) => {
+  // Mostrar modal de confirmación antes de eliminar
+  const confirmarEliminar = (finca) => {
+    setFincaAEliminar(finca)
+  }
+
+  // Cancelar eliminación
+  const cancelarEliminar = () => {
+    setFincaAEliminar(null)
+  }
+
+  // Proceder con la eliminación después de confirmar
+  const eliminarFinca = async () => {
+    if (!fincaAEliminar) return
+
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/fincas/${id}`, {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/fincas/${fincaAEliminar.id}`, {
         method: "DELETE",
       })
 
       const result = await response.json()
       if (response.ok) {
         // Actualiza la lista de fincas después de eliminar
-        setFincas((prevFincas) => prevFincas.filter((f) => f.id !== id))
+        setFincas((prevFincas) => prevFincas.filter((f) => f.id !== fincaAEliminar.id))
         showSnackbar("Finca eliminada exitosamente", "success")
       } else {
         console.error("Error:", result.message)
@@ -175,6 +189,8 @@ function Home() {
       }
     } catch (error) {
       console.error("Error al eliminar la finca:", error)
+    } finally {
+      setFincaAEliminar(null) // Limpiar el estado después de la operación
     }
   }
 
@@ -237,7 +253,7 @@ function Home() {
                       <button className="edit-btn" onClick={() => handleEdit(finca)}>
                         <FiEdit />
                       </button>
-                      <button className="delete-btn" onClick={() => handleDelete(finca.id)}>
+                      <button className="delete-btn" onClick={() => confirmarEliminar(finca)}>
                         <GoTrash />
                       </button>
                     </div>
@@ -287,6 +303,15 @@ function Home() {
       </dialog>
 
       {showRecomendacion && <RecomendacionModal onClose={handleCloseRecomendacion} />}
+
+      {fincaAEliminar && (
+        <ConfirmacionModal
+          titulo="Eliminar Finca"
+          mensaje={`¿Está seguro que desea eliminar la finca "${fincaAEliminar.Nombre}"? Esta acción no se puede deshacer.`}
+          onConfirm={eliminarFinca}
+          onCancel={cancelarEliminar}
+        />
+      )}
     </>
   )
 }
