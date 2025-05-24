@@ -4,6 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContaine
 import { jsPDF } from 'jspdf'
 import html2canvas from 'html2canvas'
 import { useSnackbar } from '../../Context/SnackbarContext'
+import { useAppData } from '../../Context/AppContext'
 
 const HistorialProduccion = ({ id }) => {
   const [registros, setRegistros] = useState([])
@@ -24,6 +25,8 @@ const HistorialProduccion = ({ id }) => {
   const graficoRef = useRef(null)
   const modalRef = useRef(null)
 
+    const { token } = useAppData()
+
   const obtenerHistorial = async () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_API_URL}/api/historial/produccion/${id}`)
@@ -43,7 +46,11 @@ const HistorialProduccion = ({ id }) => {
   // Función para obtener la información de la vaca
   const obtenerInfoVaca = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/vacas/perfil/${id}`)
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/vacas/perfil/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       const data = await response.json()
       if (response.ok) {
         setVacaInfo(data.vaca[0])
