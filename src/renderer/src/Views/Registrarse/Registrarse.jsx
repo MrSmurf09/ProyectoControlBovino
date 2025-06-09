@@ -81,6 +81,22 @@ function Registrarse() {
                         />
                     </div>
                     <div className="alinear_input_inicio">
+                        <label className="input_label_inicio">Rol:</label>
+                        <select
+                            name="Rol"
+                            className="input_inicio"
+                            value={formData.Rol}
+                            onChange={handleInputChange}
+                            required
+                        >
+                            <option value="" disabled selected>
+                                Seleccione su rol
+                            </option>
+                            <option className='rol' value="Ganadero">Ganadero</option>
+                            <option className='rol' value="Veterinario">Veterinario</option>
+                        </select>
+                    </div>
+                    <div className="alinear_input_inicio">
                         <label className="input_label_inicio">Contraseña:</label>
                         <input
                             type="password"

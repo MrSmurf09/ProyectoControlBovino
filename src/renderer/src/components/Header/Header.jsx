@@ -21,6 +21,8 @@ function Header({mostrarBotonCrear = true, mostrarInputBusqueda = true, TextButt
     nombreUser, 
     setUserId, 
     setNombreUser,
+    rol,
+    setRol,
     setToken,
     setFincaId, 
     setFincaNombre, 
@@ -43,12 +45,14 @@ function Header({mostrarBotonCrear = true, mostrarInputBusqueda = true, TextButt
     setFincaNombre(null)
     setPotreroId(null)
     setPotreroNombre(null)
+    setRol(null)
     localStorage.removeItem(`recomendacion_vista_${userId}`, "true")
     
     // Limpiar localStorage
     localStorage.removeItem('userId')
     localStorage.removeItem('fincaId')
     localStorage.removeItem('potreroId')
+    localStorage.removeItem('rol')
     
     // También podemos limpiar cualquier otro dato de sesión que exista
     localStorage.removeItem('token') 
@@ -111,7 +115,7 @@ function Header({mostrarBotonCrear = true, mostrarInputBusqueda = true, TextButt
             onClick={() => setShowUserMenu(!showUserMenu)}
           >
             <FaRegUserCircle className="user-icon" />
-            <span className="user-name">{nombreUser}</span>
+            <span className="user-name">{rol}: {nombreUser}</span>
           </div>
           
           {/* Dropdown menu */}

@@ -61,6 +61,15 @@ body::-webkit-scrollbar {
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #fff;
+  color: grey;
+}
+
+.input_inicio:focus {
+  color: #000;
+}
+
+.rol {
+  color: #000;
 }
 
 .registrarse {

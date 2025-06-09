@@ -5,6 +5,7 @@ const AppContext = createContext()
 export const AppProvider = ({ children }) => {
   const [userId, setUserId] = useState(localStorage.getItem('userId') || '')
   const [nombreUser, setNombreUser] = useState(localStorage.getItem('nombreUser') || '')
+  const [rol, setRol] = useState(localStorage.getItem('rol') || '')
   const [token, setToken] = useState(localStorage.getItem('token') || '')
   const [fincaId, setFincaId] = useState(localStorage.getItem('fincaId') || '')
   const [fincaNombre, setFincaNombre] = useState(localStorage.getItem('fincaNombre') || '')
@@ -17,6 +18,10 @@ export const AppProvider = ({ children }) => {
       localStorage.setItem('nombreUser', nombreUser)
       localStorage.setItem('token', token)
   }, [userId, nombreUser, token])
+
+  useEffect(() => {
+    localStorage.setItem('rol', rol)
+  }, [rol])
 
   useEffect(() => {
     localStorage.setItem('fincaId', fincaId)
@@ -32,6 +37,7 @@ export const AppProvider = ({ children }) => {
     <AppContext.Provider value={{
       userId, setUserId,
       nombreUser, setNombreUser,
+      rol, setRol,
       token, setToken,
       fincaId, setFincaId,
       fincaNombre, setFincaNombre,

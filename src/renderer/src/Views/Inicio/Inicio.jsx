@@ -15,6 +15,7 @@ function Inicio() {
   const {
     setUserId,
     setNombreUser,
+    setRol,
     setToken,
     setFincaId,
     setFincaNombre,
@@ -29,6 +30,8 @@ function Inicio() {
     localStorage.setItem("userId", data.userId)
     setNombreUser(data.Nombre)
     localStorage.setItem("nombreUser", data.Nombre)
+    setRol(data.rol)
+    localStorage.setItem("rol", data.rol)
     setToken(data.token)
     localStorage.setItem("token", data.token)
   }
@@ -44,11 +47,13 @@ function Inicio() {
       setFincaNombre(null)
       setPotreroId(null)
       setPotreroNombre(null)
+      setRol(null)
 
       // Limpiar localStorage
       localStorage.removeItem("userId")
       localStorage.removeItem("fincaId")
       localStorage.removeItem("potreroId")
+      localStorage.removeItem("rol")
 
       // También podemos limpiar cualquier otro dato de sesión que exista
       localStorage.removeItem("token")

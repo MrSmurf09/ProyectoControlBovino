@@ -5,6 +5,7 @@ import Header from '../../components/Header/Header'
 import { useSnackbar } from '../../Context/SnackbarContext'
 import { useAppData } from '../../Context/AppContext'
 import { useRef, useState, useEffect } from 'react'
+import ConfirmacionModal from "../../components/ConfirmacionModal/ConfirmacionModal"
 
 function Potreros() {
   const [potreros, setPotreros] = useState([])
@@ -18,6 +19,7 @@ function Potreros() {
 
   const [busqueda, setBusqueda] = useState("")
   const modalRef = useRef(null)
+  const [potreroAEliminar, setPotreroAEliminar] = useState(null)
 
   const setinfopotrero = (potrero) => {
     setPotreroId(potrero.id)
@@ -90,6 +92,44 @@ function Potreros() {
     modalRef.current.close()
   }
 
+  const confirmarEliminar = (potrero) => {
+    setPotreroAEliminar(potrero)
+  }
+
+  // Cancelar eliminación
+  const cancelarEliminar = () => {
+    setPotreroAEliminar(null)
+  }
+
+  // Proceder con la eliminación después de confirmar
+  const eliminarPotrero = async () => {
+    if (!potreroAEliminar) return
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/potreros/${potreroAEliminar.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      const result = await response.json()
+      if (response.ok) {
+        // Actualiza la lista de potreros después de eliminar
+        setPotreros((prevPotreros) => prevPotreros.filter((p) => p.id !== potreroAEliminar.id))
+        showSnackbar("Potrero eliminado exitosamente", "success")
+      } else {
+        console.error("Error:", result.message)
+        showSnackbar(`Error: ${result.message}`, "error")
+      }
+    } catch (error) {
+      console.error("Error al eliminar el potrero:", error)
+      showSnackbar("Error al eliminar el potrero", "error")
+    } finally {
+      setPotreroAEliminar(null) // Limpiar el estado después de la operación
+    }
+  }
+
   return (
     <>
       <Header TextButton="Crear Potrero" TextHeader={'Potreros: ' + fincaNombre} openCreateModal={openModal} onBuscar={setBusqueda} TextBuscar="Buscar Potreros..." />
@@ -112,7 +152,7 @@ function Potreros() {
                   <span className="potrero-detalles">Cantidad de vacas: {potrero.cantidad_vacas}</span>
                   <span className="potrero-detalles">Promedio de producción de leche: {potrero.promedio_leche ? potrero.promedio_leche.toFixed(2) : 'No disponible'}</span>
                 </Link>
-                <button className="potrero-delete-btn">
+                <button className="potrero-delete-btn" onClick={() => confirmarEliminar(potrero)}>
                   <GoTrash />
                 </button>
               </div>
@@ -148,6 +188,14 @@ function Potreros() {
           </div>
         </form>
       </dialog>
+
+      {potreroAEliminar && (
+        <ConfirmacionModal titulo="Eliminar Potrero"
+          mensaje={`¿Está seguro que desea eliminar el potrero "${potreroAEliminar.nombre}"? Esta acción no se puede deshacer.`} 
+          onConfirm={eliminarPotrero} 
+          onCancel={cancelarEliminar} 
+        />
+      )}
     </>
   )
 }

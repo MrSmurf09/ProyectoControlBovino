@@ -5,6 +5,7 @@ import Header from '../../components/Header/Header'
 import { useSnackbar } from '../../Context/SnackbarContext'
 import { useAppData } from '../../Context/AppContext'
 import { useRef, useState, useEffect } from 'react'
+import ConfirmacionModal from "../../components/ConfirmacionModal/ConfirmacionModal"
 
 function ListVacas() {
   const [vacas, setVacas] = useState([])
@@ -27,6 +28,7 @@ function ListVacas() {
 
   const [busqueda, setBusqueda] = useState("")
   const modalRef = useRef(null)
+  const [vacaAEliminar, setVacaAEliminar] = useState(null)
 
   // Obtener vacas del potrero desde la API
   const obtenerVacas = async () => {
@@ -111,6 +113,44 @@ function ListVacas() {
   const openModal = () => modalRef.current.showModal()
   const closeModal = () => modalRef.current.close()
 
+  const confirmarEliminar = (vaca) => {
+    setVacaAEliminar(vaca)
+  }
+
+  // Cancelar eliminación
+  const cancelarEliminar = () => {
+    setVacaAEliminar(null)
+  }
+
+  // Proceder con la eliminación después de confirmar
+  const eliminarVaca = async () => {
+    if (!vacaAEliminar) return
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/vacas/eliminar/${vacaAEliminar.id}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+
+      const result = await response.json()
+      if (response.ok) {
+        // Actualiza la lista de vacas después de eliminar
+        setVacas((prevVacas) => prevVacas.filter((v) => v.id !== vacaAEliminar.id))
+        showSnackbar("Vaca eliminada exitosamente", "success")
+      } else {
+        console.error("Error:", result.message)
+        showSnackbar(`Error: ${result.message}`, "error")
+      }
+    } catch (error) {
+      console.error("Error al eliminar la vaca:", error)
+      showSnackbar("Error al eliminar la vaca", "error")
+    } finally {
+      setVacaAEliminar(null) // Limpiar el estado después de la operación
+    }
+  }
+
   return (
     <>
       <Header TextButton="Crear Vaca" TextHeader={`Vacas de: ${potreroNombre}`} openCreateModal={openModal} onBuscar={setBusqueda} TextBuscar="Buscar Vacas..." />
@@ -134,7 +174,7 @@ function ListVacas() {
                   <span className="vaca-detalles">Raza: {vaca.raza}</span>
                   <span className="vaca-detalles">Promedio de producción de leche: {vaca.promedio_leche ? vaca.promedio_leche.toFixed(2) : 'No disponible'}</span>
                 </Link>
-                <button className="vaca-delete-btn">
+                <button className="vaca-delete-btn" onClick={() => confirmarEliminar(vaca)}>
                   <GoTrash />
                 </button>
               </div>
@@ -179,6 +219,14 @@ function ListVacas() {
           </div>
         </form>
       </dialog>
+
+      {vacaAEliminar && (
+        <ConfirmacionModal titulo="Eliminar Vaca"
+          mensaje={`¿Está seguro que desea eliminar la vaca "${vacaAEliminar.codigo}"? Esta acción no se puede deshacer.`} 
+          onConfirm={eliminarVaca} 
+          onCancel={cancelarEliminar} 
+        />
+      )}
     </>
   )
 }
