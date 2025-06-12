@@ -8,12 +8,14 @@ import ProcesosMedicos from '../../components/ProcesosMedicos/ProcesosMedicos'
 import RegistroRecordatorios from '../../components/RegistroRecordatorios/RegistroRecordatorios'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useAppData } from '../../Context/AppContext'
 
 const PerfilVacas = () => {
   // Estado para controlar la sección activa
   const { id } = useParams()
   const { nombre } = useParams()
-  const [seccionActiva, setSeccionActiva] = useState("produccionLeche");
+  const { rol } = useAppData()
+  const [seccionActiva, setSeccionActiva] = useState(rol === 'Ganadero' ? 'produccionLeche' : 'procesosMedicos')
 
   // Función para cambiar de sección
   const cambiarSeccion = (seccion) => {

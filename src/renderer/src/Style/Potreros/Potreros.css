@@ -36,6 +36,10 @@
   border-radius: 5px;
 }
 
+.potrero-card:hover {
+  transform: scale(1.005);
+}
+
 .potrero-info {
   display: flex;
   gap: 60px;
@@ -56,5 +60,10 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #ff0000;
+  color: #000;
+}
+
+.potrero-delete-btn:hover {
+  color: #dc3545;
+  transform: scale(1.1);
 }

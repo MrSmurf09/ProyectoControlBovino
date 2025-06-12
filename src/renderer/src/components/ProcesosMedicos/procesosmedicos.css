@@ -40,3 +40,51 @@
 .procesos-detalles li {
   margin-bottom: 1%;
 }
+
+/* Añadir estos estilos a tu archivo CSS existente */
+
+.file-upload-container {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.file-upload-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.file-input {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #f9f9f9;
+}
+
+.selected-file {
+  margin-top: 8px;
+  padding: 8px;
+  background-color: #f0f0f0;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+}
+
+.file-name {
+  font-size: 0.9rem;
+  color: #333;
+  word-break: break-all;
+}
+
+.archivo-link {
+  display: inline-block;
+  margin-left: 8px;
+  color: #0066cc;
+  text-decoration: underline;
+  font-weight: normal;
+}
+
+.archivo-link:hover {
+  color: #004080;
+}

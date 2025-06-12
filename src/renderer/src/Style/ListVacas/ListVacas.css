@@ -36,6 +36,10 @@
   border-radius: 5px;
 }
 
+.vaca-card:hover {
+  transform: scale(1.005);
+}
+
 .vaca-info {
   display: flex;
   gap: 60px;

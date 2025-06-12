@@ -88,7 +88,11 @@ function Inicio() {
 
         // Redirigir a la página de inicio después de iniciar sesión
         showSnackbar("Sesión iniciada exitosamente", "success")
-        navigate(`/Home/${data.userId}`)
+        if (data.rol === "Ganadero") {
+          navigate(`/Home/${data.userId}`)
+        } else {
+          navigate(`/ListVacas`)
+        }
       } else {
         console.log(data.message) // Mostrar error si las credenciales no son válidas
         showSnackbar(`Error: ${data.message}`, "error")

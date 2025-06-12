@@ -15,17 +15,34 @@ const AppRouter = () => {
       
       {/* Rutas protegidas */}
       <Route path="/Home/:id" element={
-        <PrivateRoute><Home /></PrivateRoute>
+        <PrivateRoute allowedRoles={['Ganadero']}>
+          <Home />
+        </PrivateRoute>
       } />
+
       <Route path="/Potreros/:nombre/:id" element={
-        <PrivateRoute><Potreros /></PrivateRoute>
+        <PrivateRoute allowedRoles={['Ganadero']}>
+          <Potreros />
+        </PrivateRoute>
       } />
+
       <Route path="/ListVacas/:nombre/:id" element={
-        <PrivateRoute><ListVacas /></PrivateRoute>
+        <PrivateRoute allowedRoles={['Ganadero']}>
+          <ListVacas />
+        </PrivateRoute>
       } />
-      <Route path="/VacasPefil/:id/:nombre" element={
-        <PrivateRoute><PerfilVacas /></PrivateRoute>
+
+      <Route path="/ListVacas" element={
+        <PrivateRoute allowedRoles={['Veterinario']}>
+          <ListVacas />
+        </PrivateRoute>
       } />
+
+    <Route path="/VacasPefil/:id/:nombre" element={
+      <PrivateRoute allowedRoles={['Ganadero', 'Veterinario']}>
+        <PerfilVacas />
+      </PrivateRoute>
+    } />
 
       {/* Ruta por defecto */}
       <Route path="/*" element={<Navigate to="/" />} />

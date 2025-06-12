@@ -103,7 +103,7 @@ function Header({mostrarBotonCrear = true, mostrarInputBusqueda = true, TextButt
         </div>
         )}
         <div className='header-icons'>
-        {mostrarBotonCrear && (
+        {rol === "Ganadero" && mostrarBotonCrear && (
           <button onClick={openCreateModal} className="create-farm-btn">{TextButton}</button>
         )}
         <div 
@@ -135,7 +135,7 @@ function Header({mostrarBotonCrear = true, mostrarInputBusqueda = true, TextButt
         </div>
       </header>
       <div className="fincas-header">
-        <h2>{TextHeader}</h2>
+        <h2>{ rol === "Ganadero" ? TextHeader : ""}</h2>
       </div>
     </>
   )

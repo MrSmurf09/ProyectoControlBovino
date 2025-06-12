@@ -24,7 +24,7 @@ function ListVacas() {
   })
 
   const { showSnackbar } = useSnackbar()
-  const { potreroId, token, potreroNombre } = useAppData()
+  const { potreroId, token, potreroNombre, rol, userId } = useAppData()
 
   const [busqueda, setBusqueda] = useState("")
   const modalRef = useRef(null)
@@ -50,8 +50,32 @@ function ListVacas() {
     }
   }
 
+  // Obtener vacas del veterinario desde la API (solo veterinarios)
+  const obtenerVacasVeterinario = async () => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/veterinario/vacas/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        },
+      })
+      const data = await response.json()
+      console.log('Data Vacas:', data)
+      if (response.ok) {
+        setVacas(data.vacas)
+      } else {
+        console.error('Error al obtener las vacas:', data.message)
+      }
+    } catch (error) {
+      console.error('Error al obtener las vacas:', error)
+    }
+  }
+
   useEffect(() => {
-    obtenerVacas()
+    if (rol === "Veterinario") {
+      obtenerVacasVeterinario()
+    } else {
+      obtenerVacas()
+    }
   }, [potreroId])
 
   // ✅ Manejar cambios en los inputs de texto
@@ -151,40 +175,94 @@ function ListVacas() {
     }
   }
 
+  let contenido;
+  // Si es un ganadero, muestra la lista de vacas
+  // Si es un veterinario, muestra la lista de vacas de su veterinario
+  if (rol === "Ganadero") {
+    if (vacas.length > 0) {
+      contenido = (
+        <div className="vacas-list">
+          {vacas
+            .filter((vaca) => 
+              vaca.codigo.toLowerCase().includes(busqueda.toLowerCase())
+            )
+            .map((vaca) => (
+            <div key={vaca.id} className="vaca-card">
+              <Link to={`/VacasPefil/${vaca.id}/${vaca.codigo}`} className="vaca-info">
+                <span className="vaca-nombre">Código: {vaca.codigo}</span>
+                <span className="vaca-detalles">Edad: {vaca.edad}</span>
+                <span className="vaca-detalles">Raza: {vaca.raza}</span>
+                <span className="vaca-detalles">Promedio de producción de leche: {vaca.promedio_leche ? vaca.promedio_leche.toFixed(2) : 'No disponible'}</span>
+              </Link>
+              <button className="vaca-delete-btn" onClick={() => confirmarEliminar(vaca)}>
+                <GoTrash />
+              </button>
+            </div>
+          ))}
+        </div>
+      );
+    } else {
+      contenido = (
+        <div className="no-registros">
+          <p>No hay vacas registradas</p>
+        </div>
+      );
+    }
+  } else if (rol === "Veterinario") {
+    if (vacas.length > 0) {
+      contenido = (
+        <div className="vacas-list">
+          {vacas
+            .filter((vaca) => 
+              vaca.Codigo.toLowerCase().includes(busqueda.toLowerCase())
+            )
+            .map((vaca) => (
+            <div key={vaca.id} className="vaca-card">
+              <Link to={`/VacasPefil/${vaca.id}/${vaca.codigo}`} className="vaca-info">
+                <span className="vaca-nombre">Código: {vaca.Codigo}</span>
+                <span className="vaca-detalles">Edad: {vaca.Edad}</span>
+                <span className="vaca-detalles">Raza: {vaca.Raza}</span>
+              </Link>
+              {rol === "Veterinario" ? (
+                <></>
+              ) : (
+              <button className="vaca-delete-btn" onClick={() => confirmarEliminar(vaca)}>
+                <GoTrash />
+              </button>
+              )}
+            </div>
+          ))}
+        </div>
+      );
+    } else {
+      contenido = (
+        <div className="no-registros">
+          <p>No hay vacas registradas</p>
+        </div>
+      );
+    }
+  } else {
+    contenido = (
+      <div className="no-registros">
+        <p>No hay vacas registradas</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <Header TextButton="Crear Vaca" TextHeader={`Vacas de: ${potreroNombre}`} openCreateModal={openModal} onBuscar={setBusqueda} TextBuscar="Buscar Vacas..." />
       <div className="vacas-container">
         <header className="vacas-header">
-          <Link to={`/Potreros/${potreroNombre}/${potreroId}`} className="volver-potreros">
-            Volver a Potreros
-          </Link>
+          {rol === "Ganadero" ? (
+            <Link to={`/Potreros/${potreroNombre}/${potreroId}`} className="volver-potreros">
+              Volver a Potreros
+            </Link>
+          ) : (
+            <></>
+          )}
         </header>
-        {vacas.length > 0 ? (
-          <div className="vacas-list">
-            {vacas
-              .filter((vaca) => 
-                vaca.codigo.toLowerCase().includes(busqueda.toLowerCase())
-              )
-              .map((vaca) => (
-              <div key={vaca.id} className="vaca-card">
-                <Link to={`/VacasPefil/${vaca.id}/${vaca.codigo}`} className="vaca-info">
-                  <span className="vaca-nombre">Código: {vaca.codigo}</span>
-                  <span className="vaca-detalles">Edad: {vaca.edad}</span>
-                  <span className="vaca-detalles">Raza: {vaca.raza}</span>
-                  <span className="vaca-detalles">Promedio de producción de leche: {vaca.promedio_leche ? vaca.promedio_leche.toFixed(2) : 'No disponible'}</span>
-                </Link>
-                <button className="vaca-delete-btn" onClick={() => confirmarEliminar(vaca)}>
-                  <GoTrash />
-                </button>
-              </div>
-            ))}
-          </div>
-        ) : (
-          <div className="no-registros">
-            <p>No hay vacas registradas</p>
-          </div>
-        )}
+        {contenido}
       </div>
 
       <dialog ref={modalRef} className="modal">
