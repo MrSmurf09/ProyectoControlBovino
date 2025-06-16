@@ -87,6 +87,11 @@
   transform: scale(1.1);
 }
 
+.vaca-botones {
+  display: flex;
+  gap: 12px
+}
+
 .vaca-delete-btn {
   background: none;
   border: none;
@@ -97,4 +102,261 @@
 .vaca-delete-btn:hover {
   color: #dc3545;
   transform: scale(1.1);
+}
+
+/* Estilos específicos para el modal de veterinario */
+.modal-veterinario {
+  max-width: 500px;
+  width: 90%;
+  padding: 0;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.modal-veterinario-header {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  color: white;
+  padding: 20px;
+  border-radius: 12px 12px 0 0;
+}
+
+.title-modal-veterinario {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.subtitle-modal-veterinario {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.modal-veterinario-content {
+  padding: 20px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.form-group-veterinario {
+  margin-bottom: 20px;
+}
+
+.label-veterinario {
+  display: block;
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.input-busqueda-veterinario {
+  width: 100%;
+  padding: 10px 12px;
+  border: 2px solid #3b82f6;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.input-busqueda-veterinario:focus {
+  outline: none;
+  border-color: #1d4ed8;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.lista-veterinarios {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  background-color: #f9fafb;
+}
+
+.item-veterinario {
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: white;
+  margin: 4px;
+  border-radius: 6px;
+}
+
+.item-veterinario:hover {
+  background-color: #dbeafe;
+  transform: translateY(-1px);
+}
+
+.item-veterinario:last-child {
+  border-bottom: none;
+}
+
+.veterinario-seleccionado {
+  background-color: #3b82f6 !important;
+  color: white;
+  box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+}
+
+.veterinario-seleccionado:hover {
+  background-color: #2563eb !important;
+}
+
+.nombre-veterinario {
+  font-weight: 600;
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.email-veterinario {
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.veterinario-seleccionado .email-veterinario {
+  opacity: 0.9;
+}
+
+.no-veterinarios {
+  text-align: center;
+  padding: 20px;
+  color: #6b7280;
+  font-style: italic;
+}
+
+.veterinario-actual {
+  background-color: #fef3c7;
+  border: 1px solid #f59e0b;
+  color: #92400e;
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.modal-veterinario-buttons {
+  padding: 20px;
+  border-top: 1px solid #e5e7eb;
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.btn-cancelar-veterinario {
+  padding: 10px 20px;
+  border: 2px solid #d1d5db;
+  background-color: white;
+  color: #374151;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cancelar-veterinario:hover {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+.btn-asignar-veterinario-modal {
+  padding: 10px 20px;
+  border: 2px solid #3b82f6;
+  background-color: #3b82f6;
+  color: white;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-asignar-veterinario-modal:hover:not(:disabled) {
+  background-color: #2563eb;
+  border-color: #2563eb;
+  transform: translateY(-1px);
+}
+
+.btn-asignar-veterinario-modal:disabled {
+  background-color: #9ca3af;
+  border-color: #9ca3af;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn-asignar-veterinario {
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-asignar-veterinario:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .modal-veterinario {
+    width: 95%;
+    max-width: none;
+  }
+
+  .modal-veterinario-header,
+  .modal-veterinario-content,
+  .modal-veterinario-buttons {
+    padding: 16px;
+  }
+
+  .modal-veterinario-buttons {
+    flex-direction: column;
+  }
+
+  .btn-cancelar-veterinario,
+  .btn-asignar-veterinario-modal {
+    width: 100%;
+  }
+}
+
+/* Estilos adicionales para la opción "Sin Veterinario" */
+.item-sin-veterinario {
+  border: 2px dashed #ef4444 !important;
+  background-color: #fef2f2 !important;
+}
+
+.item-sin-veterinario:hover {
+  background-color: #fee2e2 !important;
+  border-color: #dc2626 !important;
+}
+
+.item-sin-veterinario.veterinario-seleccionado {
+  background-color: #ef4444 !important;
+  color: white !important;
+  border-color: #dc2626 !important;
+}
+
+.item-sin-veterinario .nombre-veterinario {
+  color: #dc2626;
+  font-weight: 600;
+}
+
+.item-sin-veterinario .email-veterinario {
+  color: #991b1b;
+  font-style: italic;
+}
+
+.item-sin-veterinario.veterinario-seleccionado .nombre-veterinario,
+.item-sin-veterinario.veterinario-seleccionado .email-veterinario {
+  color: white !important;
+}
+
+/* Separador visual entre "Sin Veterinario" y la lista de veterinarios */
+.item-sin-veterinario {
+  margin-bottom: 8px !important;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 12px !important;
 }

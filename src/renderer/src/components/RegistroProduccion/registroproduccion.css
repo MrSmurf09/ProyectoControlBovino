@@ -204,3 +204,209 @@
   border-radius: 8px;
   color: #6c757d;
 }
+
+/* Estilos para las alertas de producción */
+.estadisticas-produccion {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding: 12px;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+/* Estilos para registros con alertas */
+.registro-item {
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.registro-reciente {
+  border-left: 4px solid #3b82f6;
+  background-color: #eff6ff;
+}
+
+.registro-bajo {
+  border-left: 4px solid #ef4444;
+  background-color: #fef2f2;
+}
+
+.registro-alto {
+  border-left: 4px solid #10b981;
+  background-color: #f0fdf4;
+}
+
+/* Badges para indicadores */
+.badge-reciente,
+.badge-alerta,
+.badge-excelente {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 600;
+  margin-left: 8px;
+}
+
+.badge-reciente {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.badge-alerta {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.badge-excelente {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+/* Animación para registros nuevos */
+@keyframes nuevoRegistro {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.registro-item.nuevo {
+  animation: nuevoRegistro 0.3s ease-out;
+}
+
+/* Mejoras en el input de cantidad */
+.input[type="number"] {
+  text-align: right;
+}
+
+.input[type="number"]::-webkit-outer-spin-button,
+.input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+/* Estilos mejorados para estadísticas basadas en historial completo */
+.estadisticas-produccion {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 16px;
+  margin-bottom: 20px;
+  padding: 16px;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  border-radius: 12px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 12px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease;
+}
+
+.stat-item:hover {
+  transform: translateY(-2px);
+}
+
+.stat-label {
+  font-size: 11px;
+  color: #64748b;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1e293b;
+  text-align: center;
+}
+
+.stat-subtitle {
+  font-size: 10px;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+/* Indicador de más registros */
+.mas-registros {
+  text-align: center;
+  padding: 12px;
+  background-color: #f1f5f9;
+  border-radius: 8px;
+  margin-top: 12px;
+  border: 1px dashed #cbd5e1;
+}
+
+.mas-registros p {
+  margin: 0;
+  font-size: 14px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+/* Mejoras en los badges de tendencia */
+.stat-value[style*="color"] {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+/* Responsive mejorado */
+@media (max-width: 768px) {
+  .estadisticas-produccion {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 12px;
+  }
+
+  .stat-item {
+    padding: 8px;
+  }
+
+  .stat-value {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .estadisticas-produccion {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Animación para estadísticas actualizadas */
+@keyframes estadisticaActualizada {
+  0% {
+    background-color: #dbeafe;
+  }
+  100% {
+    background-color: white;
+  }
+}
+
+.stat-item.actualizada {
+  animation: estadisticaActualizada 1s ease-out;
+}

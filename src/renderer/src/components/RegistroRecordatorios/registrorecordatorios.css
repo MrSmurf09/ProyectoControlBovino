@@ -62,3 +62,197 @@
 .procesos-detalles li strong {
   color: #495057;
 }
+
+/* Estilos para recordatorios pendientes (amarillo) */
+.recordatorio-pendiente {
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  border-left: 5px solid #f59e0b;
+  box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+  transition: all 0.3s ease;
+}
+
+.recordatorio-pendiente:hover {
+  background: linear-gradient(135deg, #fde68a 0%, #fcd34d 100%);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Estilos para recordatorios enviados (verde) */
+.recordatorio-enviado {
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+  border-left: 5px solid #10b981;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+  transition: all 0.3s ease;
+}
+
+.recordatorio-enviado:hover {
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  transform: translateY(-2px);
+}
+
+/* Header del recordatorio con ícono y badge */
+.recordatorio-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.recordatorio-icono {
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.recordatorio-estado-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Badge para pendientes */
+.recordatorio-pendiente .recordatorio-estado-badge {
+  background-color: #f59e0b;
+  color: white;
+}
+
+/* Badge para enviados */
+.recordatorio-enviado .recordatorio-estado-badge {
+  background-color: #10b981;
+  color: white;
+}
+
+/* Estilos para las pestañas */
+.tab-pendientes {
+  position: relative;
+}
+
+.tab-pendientes.active {
+  background: linear-gradient(135deg, #fef3c7, #fde68a);
+  border-bottom: 3px solid #f59e0b;
+  color: #92400e;
+}
+
+.tab-enviados.active {
+  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+  border-bottom: 3px solid #10b981;
+  color: #065f46;
+}
+
+/* Mejoras en los detalles del recordatorio */
+.recordatorio-item .procesos-detalles {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.recordatorio-item .procesos-detalles li {
+  padding: 6px 0;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  font-size: 14px;
+}
+
+.recordatorio-item .procesos-detalles li:last-child {
+  border-bottom: none;
+}
+
+.recordatorio-item .procesos-detalles strong {
+  color: #000;
+  font-weight: 600;
+  margin-right: 8px;
+}
+
+/* Texto para recordatorios pendientes */
+.recordatorio-pendiente .procesos-detalles {
+  color: #92400e;
+}
+
+/* Texto para recordatorios enviados */
+.recordatorio-enviado .procesos-detalles{
+  color: #000;
+  background: linear-gradient(135deg, #d1fae5 0%, #a7f3d0 100%);
+}
+
+/* Animación para nuevos recordatorios */
+@keyframes nuevoRecordatorio {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.recordatorio-item.nuevo {
+  animation: nuevoRecordatorio 0.5s ease-out;
+}
+
+/* Estilos para el contador en las pestañas */
+.tab {
+  position: relative;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.tab:hover {
+  transform: translateY(-1px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .recordatorio-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .recordatorio-icono {
+    font-size: 20px;
+  }
+
+  .recordatorio-estado-badge {
+    font-size: 10px;
+    padding: 3px 6px;
+  }
+}
+
+/* Estados especiales */
+.recordatorio-item {
+  margin-bottom: 16px;
+  padding: 16px;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto de brillo para recordatorios urgentes */
+.recordatorio-pendiente.urgente {
+  animation: brilloUrgente 2s infinite;
+}
+
+@keyframes brilloUrgente {
+  0%,
+  100% {
+    box-shadow: 0 2px 8px rgba(245, 158, 11, 0.2);
+  }
+  50% {
+    box-shadow: 0 4px 16px rgba(245, 158, 11, 0.4);
+  }
+}
+
+/* Mejora en el mensaje de no recordatorios */
+.no-recordatorios {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+  font-style: italic;
+  background-color: #f9fafb;
+  border-radius: 8px;
+  border: 2px dashed #d1d5db;
+}

@@ -1,8 +1,10 @@
+"use client"
+
 import "../ProcesosMedicos/procesosmedicos.css"
 import "./registrorecordatorios.css"
-import { useSnackbar } from '../../Context/SnackbarContext'
+import { useSnackbar } from "../../Context/SnackbarContext"
 import { useRef, useState, useEffect } from "react"
-import { useAppData } from '../../Context/AppContext'
+import { useAppData } from "../../Context/AppContext"
 
 const RegistroRecordatorios = ({ id }) => {
   const [recordatorios, setRecordatorios] = useState([])
@@ -54,7 +56,7 @@ const RegistroRecordatorios = ({ id }) => {
       if (response.ok) {
         setRecordatorios([...recordatorios, data.recordatorios])
         closeModal()
-        showSnackbar('Registro de recordatorio registrado exitosamente', 'success')
+        showSnackbar("Registro de recordatorio registrado exitosamente", "success")
         // Resetear el formulario
         setFormData({
           Fecha: "",
@@ -66,7 +68,7 @@ const RegistroRecordatorios = ({ id }) => {
       } else {
         console.error("Error:", data.message)
         closeModal()
-        showSnackbar(`Error: ${data.message}`, 'error')
+        showSnackbar(`Error: ${data.message}`, "error")
       }
     } catch (error) {
       console.error("Error al registrar el recordatorio:", error)
@@ -103,6 +105,16 @@ const RegistroRecordatorios = ({ id }) => {
     modalRef.current.close()
   }
 
+  // Función para determinar el estado del recordatorio
+  const obtenerEstadoRecordatorio = (recordatorio) => {
+    return recordatorio.Enviado === true ? "enviado" : "pendiente"
+  }
+
+  // Función para obtener el ícono según el estado
+  const obtenerIconoEstado = (estado) => {
+    return estado === "enviado" ? "✅" : "⏰"
+  }
+
   // Filtrar recordatorios según la pestaña activa
   const recordatoriosFiltrados = recordatorios.filter((recordatorio) => {
     if (tabActiva === "pendientes") {
@@ -125,39 +137,51 @@ const RegistroRecordatorios = ({ id }) => {
         {/* Pestañas */}
         <div className="tabs-container">
           <div
-            className={`tab ${tabActiva === "pendientes" ? "active" : ""}`}
+            className={`tab ${tabActiva === "pendientes" ? "active" : ""} tab-pendientes`}
             onClick={() => setTabActiva("pendientes")}
           >
-            Pendientes
+            ⏰ Pendientes ({recordatorios.filter((r) => !r.Enviado).length})
           </div>
-          <div className={`tab ${tabActiva === "enviados" ? "active" : ""}`} onClick={() => setTabActiva("enviados")}>
-            Enviados
+          <div
+            className={`tab ${tabActiva === "enviados" ? "active" : ""} tab-enviados`}
+            onClick={() => setTabActiva("enviados")}
+          >
+            ✅ Enviados ({recordatorios.filter((r) => r.Enviado).length})
           </div>
         </div>
 
         <div className="procesos-container">
           {recordatoriosFiltrados.length > 0 ? (
-            recordatoriosFiltrados.map((recordatorio, index) => (
-              <div className="recordatorio-item" key={recordatorio.id || index}>
-                <ul className="procesos-detalles">
-                  <li>
-                    <strong>Creación:</strong> {formatFecha(recordatorio.created_at)}
-                  </li>
-                  <li>
-                    <strong>Procedimiento:</strong> {recordatorio.Titulo}
-                  </li>
-                  <li>
-                    <strong>Tipo:</strong> {recordatorio.Tipo}
-                  </li>
-                  <li>
-                    <strong>Descripción:</strong> {recordatorio.Descripcion}
-                  </li>
-                  <li>
-                    <strong>Sonará:</strong> {formatFecha(recordatorio.Fecha)}
-                  </li>
-                </ul>
-              </div>
-            ))
+            recordatoriosFiltrados.map((recordatorio, index) => {
+              const estado = obtenerEstadoRecordatorio(recordatorio)
+              const icono = obtenerIconoEstado(estado)
+
+              return (
+                <div className={`recordatorio-item recordatorio-${estado}`} key={recordatorio.id || index}>
+                  <div className="recordatorio-header">
+                    <span className="recordatorio-icono">{icono}</span>
+                    <span className="recordatorio-estado-badge">{estado.toUpperCase()}</span>
+                  </div>
+                  <ul className="procesos-detalles">
+                    <li>
+                      <strong>Creación:</strong> {formatFecha(recordatorio.created_at)}
+                    </li>
+                    <li>
+                      <strong>Procedimiento:</strong> {recordatorio.Titulo}
+                    </li>
+                    <li>
+                      <strong>Tipo:</strong> {recordatorio.Tipo}
+                    </li>
+                    <li>
+                      <strong>Descripción:</strong> {recordatorio.Descripcion}
+                    </li>
+                    <li>
+                      <strong>Sonará:</strong> {formatFecha(recordatorio.Fecha)}
+                    </li>
+                  </ul>
+                </div>
+              )
+            })
           ) : (
             <p className="no-recordatorios">
               No hay recordatorios {tabActiva === "pendientes" ? "pendientes" : "enviados"}
