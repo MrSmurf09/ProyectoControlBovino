@@ -21,8 +21,8 @@ function ListVacas() {
     raza: "",
     novedadesSanitarias: "",
     vacunas: "",
-    fechaDesparasitacion: "",
-    fechaEmbarazo: "",
+    fechaDesparasitacion: null,
+    fechaEmbarazo: null,
   })
 
   const { showSnackbar } = useSnackbar()
@@ -36,6 +36,14 @@ function ListVacas() {
   const [vacaParaAsignar, setVacaParaAsignar] = useState(null)
   const [veterinarioSeleccionado, setVeterinarioSeleccionado] = useState("")
   const [busquedaVeterinario, setBusquedaVeterinario] = useState("")
+
+  const [showEmbarazoModal, setShowEmbarazoModal] = useState(false)
+  const [showDesparasitacionModal, setShowDesparasitacionModal] = useState(false)
+  const [vacaSeleccionada, setVacaSeleccionada] = useState(null)
+  const [fechaEmbarazoNueva, setFechaEmbarazoNueva] = useState("")
+  const [fechaDesparasitacionNueva, setFechaDesparasitacionNueva] = useState("")
+  const modalEmbarazoRef = useRef(null)
+  const modalDesparasitacionRef = useRef(null)
 
   const abrirModalAsignarVet = (vaca) => {
     if (!vaca) return
@@ -261,6 +269,86 @@ function ListVacas() {
     }
   }
 
+  const abrirModalEmbarazo = (vaca) => {
+    setVacaSeleccionada(vaca)
+    setFechaEmbarazoNueva("")
+    modalEmbarazoRef.current.showModal()
+  }
+
+  const cerrarModalEmbarazo = () => {
+    modalEmbarazoRef.current.close()
+    setVacaSeleccionada(null)
+    setFechaEmbarazoNueva("")
+  }
+
+  const abrirModalDesparasitacion = (vaca) => {
+    setVacaSeleccionada(vaca)
+    setFechaDesparasitacionNueva("")
+    modalDesparasitacionRef.current.showModal()
+  }
+
+  const cerrarModalDesparasitacion = () => {
+    modalDesparasitacionRef.current.close()
+    setVacaSeleccionada(null)
+    setFechaDesparasitacionNueva("")
+  }
+
+  const registrarEmbarazo = async () => {
+    if (!vacaSeleccionada || !fechaEmbarazoNueva) return
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/vacas/embarazo/${vacaSeleccionada.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ fechaEmbarazo: fechaEmbarazoNueva }),
+      })
+
+      const result = await response.json()
+      if (response.ok) {
+        await obtenerVacas()
+        cerrarModalEmbarazo()
+        showSnackbar("Embarazo registrado exitosamente", "success")
+      } else {
+        console.error("Error:", result.message)
+        showSnackbar(`Error: ${result.message}`, "error")
+      }
+    } catch (error) {
+      console.error("Error al registrar embarazo:", error)
+      showSnackbar("Error al registrar embarazo", "error")
+    }
+  }
+
+  const registrarDesparasitacion = async () => {
+    if (!vacaSeleccionada || !fechaDesparasitacionNueva) return
+
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/vacas/desparasitacion/${vacaSeleccionada.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ fechaDesparasitacion: fechaDesparasitacionNueva }),
+      })
+
+      const result = await response.json()
+      if (response.ok) {
+        await obtenerVacas()
+        cerrarModalDesparasitacion()
+        showSnackbar("Desparasitación registrada exitosamente", "success")
+      } else {
+        console.error("Error:", result.message)
+        showSnackbar(`Error: ${result.message}`, "error")
+      }
+    } catch (error) {
+      console.error("Error al registrar desparasitación:", error)
+      showSnackbar("Error al registrar desparasitación", "error")
+    }
+  }
+
   let contenido
   if (rol === "Ganadero") {
     if (vacas.length > 0) {
@@ -285,6 +373,12 @@ function ListVacas() {
                 <div className="vaca-botones">
                   <button className="btn-asignar-veterinario" onClick={() => abrirModalAsignarVet(vaca)}>
                     {vaca.nombre_veterinario ? "Cambiar Veterinario" : "Asignar Veterinario"}
+                  </button>
+                  <button className="btn-registrar-embarazo" onClick={() => abrirModalEmbarazo(vaca)}>
+                    Registrar Embarazo
+                  </button>
+                  <button className="btn-registrar-desparasitacion" onClick={() => abrirModalDesparasitacion(vaca)}>
+                    Registrar Desparasitación
                   </button>
                   <button className="vaca-delete-btn" onClick={() => confirmarEliminar(vaca)}>
                     <GoTrash />
@@ -415,6 +509,7 @@ function ListVacas() {
               className="input"
               name="fechaDesparasitacion"
               type="date"
+              placeholder="Fecha de Desparasitación (Opcional)"
               value={formData.fechaDesparasitacion}
               onChange={obtenerInputs}
             />
@@ -424,6 +519,7 @@ function ListVacas() {
               className="input"
               name="fechaEmbarazo"
               type="date"
+              placeholder="Fecha de Embarazo (Opcional)"
               value={formData.fechaEmbarazo}
               onChange={obtenerInputs}
             />
@@ -531,6 +627,70 @@ function ListVacas() {
                 : "Asignar"}
           </button>
         </div>
+      </dialog>
+
+      {/* Modal para registrar embarazo */}
+      <dialog ref={modalEmbarazoRef} className="modal">
+        <h3 className="title-modal">Registrar Embarazo</h3>
+        <p>
+          Vaca: <strong>{vacaSeleccionada?.codigo}</strong>
+        </p>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            registrarEmbarazo()
+          }}
+        >
+          <div className="alinear-input">
+            <input
+              className="input"
+              type="date"
+              value={fechaEmbarazoNueva}
+              onChange={(e) => setFechaEmbarazoNueva(e.target.value)}
+              required
+            />
+          </div>
+          <div className="modal-buttons">
+            <button type="submit" className="btn-guardar-modal">
+              Registrar
+            </button>
+            <button type="button" onClick={cerrarModalEmbarazo} className="btn-cerrar-modal">
+              Cerrar
+            </button>
+          </div>
+        </form>
+      </dialog>
+
+      {/* Modal para registrar desparasitación */}
+      <dialog ref={modalDesparasitacionRef} className="modal">
+        <h3 className="title-modal">Registrar Desparasitación</h3>
+        <p>
+          Vaca: <strong>{vacaSeleccionada?.codigo}</strong>
+        </p>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault()
+            registrarDesparasitacion()
+          }}
+        >
+          <div className="alinear-input">
+            <input
+              className="input"
+              type="date"
+              value={fechaDesparasitacionNueva}
+              onChange={(e) => setFechaDesparasitacionNueva(e.target.value)}
+              required
+            />
+          </div>
+          <div className="modal-buttons">
+            <button type="submit" className="btn-guardar-modal">
+              Registrar
+            </button>
+            <button type="button" onClick={cerrarModalDesparasitacion} className="btn-cerrar-modal">
+              Cerrar
+            </button>
+          </div>
+        </form>
       </dialog>
 
       {vacaAEliminar && (

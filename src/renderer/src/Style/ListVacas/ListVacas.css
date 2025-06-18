@@ -282,7 +282,7 @@
   transform: none;
 }
 
-.btn-asignar-veterinario {
+.btn-asignar-veterinario, .btn-registrar-embarazo, .btn-registrar-desparasitacion {
   background-color: #3b82f6;
   color: white;
   border: none;
@@ -294,7 +294,7 @@
   transition: all 0.2s ease;
 }
 
-.btn-asignar-veterinario:hover {
+.btn-asignar-veterinario:hover, .btn-registrar-embarazo:hover, .btn-registrar-desparasitacion:hover {
   background-color: #2563eb;
   transform: translateY(-1px);
 }
