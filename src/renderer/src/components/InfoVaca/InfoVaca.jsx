@@ -51,7 +51,7 @@ const InfoVaca = ({ id }) => {
 
   return (
     <section className="vaca-info-2">
-      <img src="https://via.placeholder.com/150" alt="Vaca" className="vaca-imagen" />
+      <img src="https://i.postimg.cc/KYzFy6jT/Chat-GPT-Image-20-jun-2025-22-26-13.png" alt="Vaca" className="vaca-imagen" />
       <div className="info-detalles">
         <div className='alinear-info'>
           <p><strong>Código:</strong> {vaca.Codigo}</p>

@@ -170,9 +170,6 @@ const RegistroRecordatorios = ({ id }) => {
                       <strong>Procedimiento:</strong> {recordatorio.Titulo}
                     </li>
                     <li>
-                      <strong>Tipo:</strong> {recordatorio.Tipo}
-                    </li>
-                    <li>
                       <strong>Descripción:</strong> {recordatorio.Descripcion}
                     </li>
                     <li>
@@ -210,24 +207,6 @@ const RegistroRecordatorios = ({ id }) => {
             value={formData.Titulo}
             required
           />
-          <select
-            className="input"
-            name="Tipo"
-            id="tipo"
-            type="text"
-            placeholder="Tipo"
-            onChange={obtenerInputs}
-            value={formData.Tipo}
-            required
-          >
-            <option value="" disabled>
-              Seleccione un tipo
-            </option>
-            <option value="Veterinario">Veterinario</option>
-            <option value="Farmacia">Farmacia</option>
-            <option value="Hospital">Hospital</option>
-            <option value="Otro">Otro</option>
-          </select>
           <textarea
             className="textarea"
             name="Descripcion"

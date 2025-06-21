@@ -431,7 +431,7 @@ function ListVacas() {
     <>
       <Header
         TextButton="Crear Vaca"
-        TextHeader={`Vacas de: ${potreroNombre}`}
+        TextHeader={`Vacas del potrero: ${potreroNombre}`}
         openCreateModal={openModal}
         onBuscar={setBusqueda}
         TextBuscar="Buscar Vacas..."
@@ -504,6 +504,7 @@ function ListVacas() {
               required
             />
           </div>
+          <span>fecha desparasitacion</span>
           <div className="alinear-input">
             <input
               className="input"
@@ -514,6 +515,7 @@ function ListVacas() {
               onChange={obtenerInputs}
             />
           </div>
+          <span>fecha embarazo</span>
           <div className="alinear-input">
             <input
               className="input"

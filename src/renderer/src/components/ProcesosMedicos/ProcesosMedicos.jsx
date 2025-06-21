@@ -159,7 +159,6 @@ const ProcesosMedicos = ({ id }) => {
             </option>
             <option value="Realizado">Realizado</option>
             <option value="Cancelado">Cancelado</option>
-            <option value="Recordatorio">Recordatorio</option>
           </select>
           <textarea
             className="textarea"

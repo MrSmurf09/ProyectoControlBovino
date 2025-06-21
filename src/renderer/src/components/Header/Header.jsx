@@ -121,10 +121,6 @@ function Header({mostrarBotonCrear = true, mostrarInputBusqueda = true, TextButt
           {/* Dropdown menu */}
           {showUserMenu && (
             <div className="user-dropdown">
-              <div className="dropdown-item dropdown-settings" onClick={handleSettings}>
-                <FiSettings className="dropdown-icon" />
-                <span>Configuración</span>
-              </div>
               <div className="dropdown-item dropdown-logout" onClick={handleLogout}>
                 <FiLogOut className="dropdown-icon" />
                 <span>Cerrar sesión</span>

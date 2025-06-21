@@ -132,7 +132,7 @@ function Potreros() {
 
   return (
     <>
-      <Header TextButton="Crear Potrero" TextHeader={'Potreros: ' + fincaNombre} openCreateModal={openModal} onBuscar={setBusqueda} TextBuscar="Buscar Potreros..." />
+      <Header TextButton="Crear Potrero" TextHeader={'Potreros de la finca: ' + fincaNombre} openCreateModal={openModal} onBuscar={setBusqueda} TextBuscar="Buscar Potreros..." />
       <div className="potreros-container">
         <header className="potreros-header">
           <Link to={`/Home/${userId}`} className="volver-fincas">

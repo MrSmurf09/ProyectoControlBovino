@@ -269,7 +269,8 @@ function Home() {
       <dialog ref={modalRef} className="modal">
         <h3 className="title-modal">{fincaSeleccionada ? "Editar Finca" : "Registro de Nueva Finca"}</h3>
         <form onSubmit={fincaSeleccionada ? handleUpdate : handleSubmit} encType="multipart/form-data">
-          <input className="input" id="imagen" type="file" name="Imagen" onChange={ObtenerIputs} />
+        <span>Imagen de la finca</span>
+          <input className="input" id="imagen" type="file" name="Imagen" onChange={ObtenerIputs} accept="image/*" />
           <input
             className="input"
             id="nombre-finca"

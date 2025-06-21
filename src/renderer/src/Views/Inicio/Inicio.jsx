@@ -117,11 +117,11 @@ function Inicio() {
         <img src="https://i.postimg.cc/zD0RMBZy/logo-removebg.png" alt="Logo" className="logo" />
         <form className="form_inicio" onSubmit={handleSubmit}>
           <div className="alinear_input_inicio">
-            <label className="input_label_inicio">Usuario:</label>
+            <label className="input_label_inicio">Correo:</label>
             <input
               type="email"
               className="input_inicio"
-              placeholder="Ingrese su Usuario"
+              placeholder="Ingrese su Correo"
               value={Correo}
               onChange={(e) => setCorreo(e.target.value)}
               required
