@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useSnackbar } from '../../Context/SnackbarContext';
+import { Link } from 'react-router-dom';
 import '../../Style/Inicio/Inicio.css';
 
 function Registrarse() {
@@ -121,6 +122,10 @@ function Registrarse() {
                         />
                     </div>
                     <button type="submit" className="btn_inicio">Registrarse</button>
+
+                    <Link to="/" className="registrarse">
+                        ¿Ya tienes una cuenta?
+                    </Link> 
                 </form>
             </div>
         </div>

@@ -143,7 +143,7 @@ function Inicio() {
           </button>
           <div className="enlaces-adicionales">
             <Link to="/Registrarse" className="registrarse">
-              ¿Registrate?
+              ¿No tienes una cuenta?
             </Link>
             <button type="button" className="recuperar-contraseña" onClick={openRecuperarModal}>
               ¿Olvidaste tu contraseña?
