@@ -41,6 +41,10 @@
   margin-top: 2%;
 }
 
+.registro-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
 .btn-agregar {
   margin-top: 2%; /* Margen superior */
   margin-bottom: 2%;

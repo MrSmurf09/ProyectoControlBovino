@@ -28,7 +28,11 @@
   background-color: #555; /* Color de la barra de scroll al pasar el mouse */
 }
 
-.procesos-detalles {
+.proceso-item {
+  margin-bottom: 20px;
+}
+
+.procesos-detalles-medicos {
   list-style: none;
   background-color: #f9f9f9;
   padding: 2%;
@@ -39,8 +43,13 @@
   flex-direction: column;
 }
 
-.procesos-detalles li {
+.procesos-detalles-medicos:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.procesos-detalles-medicos li {
   margin-bottom: 1%;
+  border-bottom: 1px solid #ddd;
 }
 
 /* Añadir estos estilos a tu archivo CSS existente */

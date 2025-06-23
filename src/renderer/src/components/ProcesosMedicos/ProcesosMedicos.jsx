@@ -130,15 +130,12 @@ const ProcesosMedicos = ({ id }) => {
           <div className="procesos-container">
             {procesos.map((proceso, index) => (
               <div className="proceso-item" key={proceso.id || index}>
-                <ul className="procesos-detalles">
+                <ul className="procesos-detalles-medicos">
                   <li>
                     <strong>Fecha:</strong> {formatFecha(proceso.created_at)}
                   </li>
                   <li>
                     <strong>Procedimiento:</strong> {proceso.Tipo}
-                  </li>
-                  <li>
-                    <strong>Estado:</strong> {proceso.Estado}
                   </li>
                   <li>
                     <strong>Descripcion:</strong> {proceso.Descripcion}
@@ -172,22 +169,6 @@ const ProcesosMedicos = ({ id }) => {
             value={formData.Tipo}
             required
           />
-          <select
-            className="input"
-            name="Estado"
-            id="estado"
-            type="text"
-            placeholder="Estado"
-            onChange={obtenerInputs}
-            value={formData.Estado}
-            required
-          >
-            <option value="" selected disabled>
-              Seleccione un estado
-            </option>
-            <option value="Realizado">Realizado</option>
-            <option value="Cancelado">Cancelado</option>
-          </select>
           <textarea
             className="textarea"
             name="Descripcion"
