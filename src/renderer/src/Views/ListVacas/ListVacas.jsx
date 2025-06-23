@@ -1,5 +1,3 @@
-"use client"
-
 import "../../Style/ListVacas/ListVacas.css"
 import { GoTrash } from "react-icons/go"
 import { Link } from "react-router-dom"
@@ -367,7 +365,7 @@ function ListVacas() {
                   </span>
                   <span className="vaca-detalles">
                     Promedio de producción de leche:{" "}
-                    {vaca.promedio_leche ? vaca.promedio_leche.toFixed(2) : "No disponible"}
+                    {vaca.promedio_leche ? vaca.promedio_leche.toFixed(2) : "No disponible"}L
                   </span>
                 </Link>
                 <div className="vaca-botones">

@@ -143,6 +143,11 @@
 }
 
 /* Mejoras en los detalles del recordatorio */
+.recordatorio-item {
+  display: flex;
+  flex-direction: column;
+}
+
 .recordatorio-item .procesos-detalles {
   margin: 0;
   padding: 0;
@@ -163,6 +168,10 @@
   color: #000;
   font-weight: 600;
   margin-right: 8px;
+}
+
+.procesos-detalles{
+  border: none;
 }
 
 /* Texto para recordatorios pendientes */

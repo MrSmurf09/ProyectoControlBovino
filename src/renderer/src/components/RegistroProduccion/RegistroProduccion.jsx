@@ -1,8 +1,8 @@
-"use client"
-
 import "../RegistroProduccion/registroproduccion.css"
+import { GoTrash } from "react-icons/go"
 import { useRef, useState, useEffect, useMemo } from "react"
 import { useSnackbar } from "../../Context/SnackbarContext"
+import { useAppData } from "../../Context/AppContext"
 
 const RegistroProduccion = ({ id }) => {
   const [registros, setRegistros] = useState([]) // Todos los registros del historial
@@ -12,6 +12,7 @@ const RegistroProduccion = ({ id }) => {
     Cantidad: "",
   })
   const { showSnackbar } = useSnackbar()
+  const { token } = useAppData()
 
   // Obtener el historial completo de producción de leche desde la API
   const obtenerHistorial = async () => {
@@ -141,7 +142,7 @@ const RegistroProduccion = ({ id }) => {
 
   useEffect(() => {
     obtenerHistorial()
-  }, [id])
+  }, [id, registros.length])
 
   const modalRef = useRef(null)
 
@@ -235,6 +236,31 @@ const RegistroProduccion = ({ id }) => {
     }
   }
 
+  // Función para eliminar registros
+  const eliminarRegistro = async (idRegistro) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/eliminar/produccion/${idRegistro}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`, // si es necesario
+        },
+      })
+      const data = await response.json()
+
+      if (response.ok) {
+        showSnackbar("Registro eliminado exitosamente", "success")
+        await obtenerHistorial() // refrescar la lista
+      } else {
+        console.error("Error al eliminar:", data.message)
+        showSnackbar(`Error: ${data.message}`, "error")
+      }
+    } catch (error) {
+      console.error("Error al eliminar el registro:", error)
+      showSnackbar("Error de conexión al eliminar el registro", "error")
+    }
+  }
+
+
   return (
     <>
       <section className="registro-produccion">
@@ -301,6 +327,9 @@ const RegistroProduccion = ({ id }) => {
                     {claseAlerta === "registro-bajo" && <span className="badge-alerta">⚠️ Bajo</span>}
                     {claseAlerta === "registro-alto" && <span className="badge-excelente">🌟 Excelente</span>}
                   </p>
+                  <button className="eliminar-registro" onClick={() => eliminarRegistro(registro.id)}>
+                    <GoTrash />
+                  </button>
                 </div>
               )
             })

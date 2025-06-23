@@ -150,7 +150,7 @@ function Potreros() {
                 <Link to={`/ListVacas/${potrero.nombre}/${potrero.id}`} className="potrero-info" onClick={() => setinfopotrero(potrero)}>
                   <span className="potrero-nombre">Nombre del potrero: {potrero.nombre}</span>
                   <span className="potrero-detalles">Cantidad de vacas: {potrero.cantidad_vacas}</span>
-                  <span className="potrero-detalles">Promedio de producción de leche: {potrero.promedio_leche ? potrero.promedio_leche.toFixed(2) : 'No disponible'}</span>
+                  <span className="potrero-detalles">Promedio de producción de leche: {potrero.promedio_leche ? potrero.promedio_leche.toFixed(2) : 'No disponible'}L</span>
                 </Link>
                 <button className="potrero-delete-btn" onClick={() => confirmarEliminar(potrero)}>
                   <GoTrash />

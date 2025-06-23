@@ -1,15 +1,14 @@
-"use client"
-
 import "../ProcesosMedicos/procesosmedicos.css"
 import "./registrorecordatorios.css"
 import { useSnackbar } from "../../Context/SnackbarContext"
 import { useRef, useState, useEffect } from "react"
 import { useAppData } from "../../Context/AppContext"
+import { GoTrash } from "react-icons/go"
 
 const RegistroRecordatorios = ({ id }) => {
   const [recordatorios, setRecordatorios] = useState([])
   const [tabActiva, setTabActiva] = useState("pendientes")
-  const { userId } = useAppData()
+  const { userId, token } = useAppData()
   const [formData, setFormData] = useState({
     Fecha: "",
     Titulo: "",
@@ -124,6 +123,30 @@ const RegistroRecordatorios = ({ id }) => {
     }
   })
 
+  // Eliminar recordatorio
+  const eliminarRecordatorio = async (idRecordatorio) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/recordatorios/eliminar/${idRecordatorio}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`, // si es necesario
+        },
+      })
+      const data = await response.json()
+
+      if (response.ok) {
+        showSnackbar("Recordatorio eliminado exitosamente", "success")
+        await obtenerRecordatorios() // refrescar la lista
+      } else {
+        console.error("Error al eliminar:", data.message)
+        showSnackbar(`Error: ${data.message}`, "error")
+      }
+    } catch (error) {
+      console.error("Error al eliminar el recordatorio:", error)
+      showSnackbar("Error de conexión al eliminar el recordatorio", "error")
+    }
+  }
+
   return (
     <>
       <section className="procesos-medicos">
@@ -176,6 +199,11 @@ const RegistroRecordatorios = ({ id }) => {
                       <strong>Sonará:</strong> {formatFecha(recordatorio.Fecha)}
                     </li>
                   </ul>
+                    {estado === "pendiente" && (
+                      <button className="eliminar-registro" onClick={() => eliminarRecordatorio(recordatorio.id)}>
+                        <GoTrash />
+                      </button>
+                    )}
                 </div>
               )
             })

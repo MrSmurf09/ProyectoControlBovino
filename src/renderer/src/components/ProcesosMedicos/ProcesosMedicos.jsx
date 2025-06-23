@@ -1,6 +1,5 @@
-"use client"
-
 import "./procesosmedicos.css"
+import { GoTrash } from "react-icons/go"
 import { useSnackbar } from "../../Context/SnackbarContext"
 import { useRef, useState, useEffect } from "react"
 import { useAppData } from "../../Context/AppContext"
@@ -14,7 +13,7 @@ const ProcesosMedicos = ({ id }) => {
     Descripcion: "",
   })
 
-  const { rol } = useAppData()
+  const { rol, token } = useAppData()
   const { showSnackbar } = useSnackbar()
 
   // Obtener los procesos de medicos desde la API
@@ -92,6 +91,30 @@ const ProcesosMedicos = ({ id }) => {
     modalRef.current.close()
   }
 
+  // Función para eliminar procesos
+  const eliminarProceso = async (idProceso) => {
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/procesos/medicos/eliminar/${idProceso}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`, // si es necesario
+        },
+      })
+      const data = await response.json()
+
+      if (response.ok) {
+        showSnackbar("Proceso eliminado exitosamente", "success")
+        await obtenerProcesos() // refrescar la lista
+      } else {
+        console.error("Error al eliminar:", data.message)
+        showSnackbar(`Error: ${data.message}`, "error")
+      }
+    } catch (error) {
+      console.error("Error al eliminar el proceso:", error)
+      showSnackbar("Error de conexión al eliminar el proceso", "error")
+    }
+  }
+
   return (
     <>
       <section className="procesos-medicos">
@@ -120,6 +143,11 @@ const ProcesosMedicos = ({ id }) => {
                   <li>
                     <strong>Descripcion:</strong> {proceso.Descripcion}
                   </li>
+                  {rol === "Veterinario" && (
+                    <button className="eliminar-registro" onClick={() => eliminarProceso(proceso.id)}>
+                      <GoTrash />
+                    </button>
+                  )}
                 </ul>
               </div>
             ))}
